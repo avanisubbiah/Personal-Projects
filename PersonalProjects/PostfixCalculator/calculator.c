@@ -342,7 +342,7 @@ int main (void)
     infixToPostfix(infixExpression, postfixExpression);
     printf("Postfix expression: %s\n", postfixExpression);
     resultPostfix = postfixEval(postfixExpression);
-    printf("Result = %d\n", resultPostfix);
+    printf("Result = %ld\n", resultPostfix);
     
     return 0;
 }
