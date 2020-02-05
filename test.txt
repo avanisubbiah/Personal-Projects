@@ -1,2 +1,2 @@
-test git from linux
+test git from linux2
 test git from windowsDesktop wo Pass
