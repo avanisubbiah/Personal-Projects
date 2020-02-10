@@ -8,7 +8,7 @@ class answerReader:
     # Method to read a text file: "txtName"
     def reader(txtName):
         with open(txtName) as txt:
-            aDict = OrderedDict()
+            dict = OrderedDict()
             # Reading all lines in A.txt into keysAndVals
             keysAndValsOG = txt.readlines()
             i = 0
@@ -19,6 +19,7 @@ class answerReader:
             semiPos = 0
             keysAndVals = keysAndValsOG
 
+            # Converting one line default answer format to newlines
             for value in keysAndValsOG[0]:
                 if keysAndValsOG[0][ii] == ';':
                     semiPos = ii
@@ -28,6 +29,7 @@ class answerReader:
                 ii += 1
             keysAndVals = keysAndValsOG[0].split("|")
 
+            # Creating dictionary for reader
             for value in keysAndVals:
                 keyVal1st = keysAndVals[i].split(":")
                 val1st = keyVal1st[1].split(";")
@@ -55,16 +57,16 @@ class answerReader:
             # For every value in key update dictionary with next key and value
             for value in key:
                 keyNow = str(key[i])
-                aDict.update({keyNow: val[i]})
+                dict.update({keyNow: val[i]})
                 i += 1
             # TODO Remove test print loop when done
             '''
             print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-            for keys,values in aDict.items():
+            for keys,values in dict.items():
                 print(keys)
-                print(aDict[keys])
+                print(dict[keys])
             '''
-        return aDict
+        return dict
 
 
 class levenshteinD:
@@ -77,6 +79,7 @@ class levenshteinD:
         totAns = 0
         avgDistDouble = None
 
+        # Creating combinations of different answers for each key
         frameAnsCombList = []
         for key in realADict:
             frameAnsCombinations = [[real, gen] for real in realADict[key] for gen in aDict[key]]
@@ -93,6 +96,7 @@ class levenshteinD:
         print("-----------------------")
         print(frameAnsCombList[0][0][0])
         '''
+        # Creating list of distances between each possible combination of answers to each key
         distList = frameAnsCombList
         keyInd = 0
         for key in frameAnsCombList:
@@ -113,6 +117,7 @@ class levenshteinD:
                 ansMacMatchInd += 1
             keyInd += 1
 
+        # Flattening distList (There is unecessary nested lists right now)
         keyInd = 0
         for key in distList:
             flatRealADictStr = []
@@ -124,6 +129,7 @@ class levenshteinD:
         #print("---------------------------------------------------")
         #print(distList)
 
+        # Applying selection sort (least to greatest) to distList
         keyInd = 0
         minI = 0
         for key in distList:
@@ -137,6 +143,7 @@ class levenshteinD:
                 distList[keyInd][i], distList[keyInd][minI] = distList[keyInd][minI], distList[keyInd][i] 
         #print(distList)
 
+        # Creating a related array to distList with the number of words per key in realADict
         totalWord = []
         for key in realADict:
             totalWordInKey = []
@@ -146,6 +153,7 @@ class levenshteinD:
             totalWord.append(sum(totalWordInKey))
         #print(totalWord)
 
+        # Calculating total Levenshtein Distance per key in distListSumOfKey list 
         distListSumOfKey = []
         keyInd = 0
         for key in distList:
@@ -155,29 +163,7 @@ class levenshteinD:
         #print(distListSumOfKey)
         #print(frameAnsCombList[0][0])
         #print([[real, gen] for real in frameAnsCombList[0][0][0] for gen in frameAnsCombList[0][0][1]])
-        # Iterating and calculating distance for each key in realADict
-        '''
-        for key in realADict:
-            
-            # Flattening realADict values for this key into one list
-            flatRealADictStr = []
-            for sublist in realADict[key]:
-                for val in sublist:
-                    flatRealADictStr.append(val)
-            realADict[key] = flatRealADictStr
-            #print(" ".join(realADict[key]))
-            # Flattening aDict values for this key into one list
-            flatADictStr = []
-            for sublist in aDict[key]:
-                for val in sublist:
-                    flatADictStr.append(val)
-            aDict[key] = flatADictStr
-            #print(" ".join(aDict[key]))
-            # Appending the distance between
-            print(" ".join(" ".join(realADict[key])))
-            print(" ".join(" ".join(aDict[key])))
-            distList.append( distance( " ".join(" ".join(realADict[key])), " ".join(" ".join(aDict[key])) ) )
-        '''
+
         # Calculating and Returning average distance
         if (len(distListSumOfKey) != 0):
             avgDistDouble = sum(distListSumOfKey)/len(distListSumOfKey)
