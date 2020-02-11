@@ -89,7 +89,9 @@ class levenshteinD:
         for key in frameAnsCombList:
             ansMacMatchInd = 0
             for ansMacMatch in frameAnsCombList[keyInd]:
-                frameAnsCombList[keyInd][ansMacMatchInd] = [[real, gen] for real in frameAnsCombList[keyInd][ansMacMatchInd][0] for gen in frameAnsCombList[keyInd][ansMacMatchInd][1]]
+                frameAnsCombList[keyInd][ansMacMatchInd] = [[real, gen] for real in \
+                    frameAnsCombList[keyInd][ansMacMatchInd][0] for gen in \
+                        frameAnsCombList[keyInd][ansMacMatchInd][1]]
                 ansMacMatchInd += 1
             keyInd += 1
         '''
@@ -109,10 +111,13 @@ class levenshteinD:
                     print(keyInd)
                     print(ansMacMatchInd)
                     print(ansInnMatchInd)
-                    print(distance(distList[keyInd][ansMacMatchInd][ansInnMatchInd][0],distList[keyInd][ansMacMatchInd][ansInnMatchInd][1]))
+                    print(distance(distList[keyInd][ansMacMatchInd][ansInnMatchInd][0], \
+                        distList[keyInd][ansMacMatchInd][ansInnMatchInd][1]))
                     print(distList)
                     '''
-                    distList[keyInd][ansMacMatchInd][ansInnMatchInd] = distance(distList[keyInd][ansMacMatchInd][ansInnMatchInd][0], distList[keyInd][ansMacMatchInd][ansInnMatchInd][1])
+                    distList[keyInd][ansMacMatchInd][ansInnMatchInd] = distance \
+                        (distList[keyInd][ansMacMatchInd][ansInnMatchInd][0], \
+                            distList[keyInd][ansMacMatchInd][ansInnMatchInd][1])
                     ansInnMatchInd += 1
                 ansMacMatchInd += 1
             keyInd += 1
@@ -140,7 +145,8 @@ class levenshteinD:
                     if distList[keyInd][minI] > distList[keyInd][j]:
                         minI = j
                 # Swap the found minimum element with minI       
-                distList[keyInd][i], distList[keyInd][minI] = distList[keyInd][minI], distList[keyInd][i] 
+                distList[keyInd][i], distList[keyInd][minI] = distList[keyInd][minI],\
+                    distList[keyInd][i] 
         #print(distList)
 
         # Creating a related array to distList with the number of words per key in realADict
