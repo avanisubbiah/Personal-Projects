@@ -25,7 +25,7 @@ class answerReader:
                     semiPos = ii
                 elif keysAndValsOG[0][ii] == ':':
                     if (semiPos != 0):
-                        keysAndVals[0] = keysAndValsOG[0][0:semiPos] + '|' + keysAndValsOG[0][(semiPos+1):]                
+                        keysAndVals[0] = keysAndValsOG[0][0:semiPos] + '|' + keysAndValsOG[0][(semiPos+1):]
                 ii += 1
             keysAndVals = keysAndValsOG[0].split("|")
 
@@ -112,7 +112,7 @@ class levenshteinD:
                     print(distance(distList[keyInd][ansMacMatchInd][ansInnMatchInd][0],distList[keyInd][ansMacMatchInd][ansInnMatchInd][1]))
                     print(distList)
                     '''
-                    distList[keyInd][ansMacMatchInd][ansInnMatchInd] = distance(distList[keyInd][ansMacMatchInd][ansInnMatchInd][0],distList[keyInd][ansMacMatchInd][ansInnMatchInd][1])
+                    distList[keyInd][ansMacMatchInd][ansInnMatchInd] = distance(distList[keyInd][ansMacMatchInd][ansInnMatchInd][0], distList[keyInd][ansMacMatchInd][ansInnMatchInd][1])
                     ansInnMatchInd += 1
                 ansMacMatchInd += 1
             keyInd += 1
