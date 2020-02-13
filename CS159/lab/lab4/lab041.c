@@ -25,6 +25,75 @@
 #include <stdlib.h>
 #define PI 3.14159265 // Defining constant pi
 
+// Defining functions for later
+double eField(double ptCharge, double r);
+double mag(double vecX, double vecY);
+double angle(double vecX, double vecY);
+
+double convUnitCToB(double c);
+double convUnitMuToB(double Mu);
+double convEFieldToForce(double eField, double obsCharge);
+
+int main (void)
+{
+  double charge1; // Coulombic charge of charge 1 (micro C)
+  double charge2; // Coulombic charge of charge 2 (micro C)
+  double charge3; // Coulombic charge of charge 3 (micro C)
+
+  double y; // y value of charge 3 (cm)
+  double x; // x value of charge 3 (cm)
+
+  double fNetVecX; // Net force vector x comp (N)
+  double fNetVecY; // Net force vector y comp (N)
+  double fNetMag; // Magnitude of the net force (N)
+  double fNetAngle; // Angle of the net force degrees
+
+  double eC2OnC1; // Electric field of charge 2 on 1 (N/C)
+  double eC3OnC1; // Electric field of charge 3 on 1 (N/C)
+
+  double fC2OnC1; // Force of charge 2 on 1 (N)
+  double fC3OnC1; // Force of charge 3 on 1 (N)
+
+  // Recieving input from user for charges 
+  printf("Enter charge [micro-Coulomb] of point #1 -> ");
+  scanf("%lf", &charge1);
+  printf("Enter charge [micro-Coulomb] of point #2 -> ");
+  scanf("%lf", &charge2);
+  printf("Enter charge [micro-Coulomb] of point #3 -> ");
+  scanf("%lf", &charge3);
+
+  // Recieving input for y and x coordinates of charge 2 and 3
+  printf("Enter Y coordinate [cm] of point #2 -> ");
+  scanf("%lf", &y);
+  printf("Enter X coordinate [cm] of point #3 -> ");
+  scanf("%lf", &x);
+  printf("\n");
+
+  // Converting micro coulombs to coulombs
+  charge1 = convUnitMuToB(charge1);
+  charge2 = convUnitMuToB(charge2);
+  charge3 = convUnitMuToB(charge3);
+  // Converting cm to m
+  y = convUnitCToB(y);
+  x = convUnitCToB(x);
+
+  // Calculating electric fields and forces from charge 2 and 3
+  eC2OnC1 = eField(charge2, y);
+  eC3OnC1 = eField(charge3, x);
+  fC2OnC1 = convEFieldToForce(eC2OnC1, charge1);
+  fC3OnC1 = convEFieldToForce(eC3OnC1, charge1);
+  // Finding net force vector and its magnitude and angle
+  fNetVecX = fC3OnC1;
+  fNetVecY = fC2OnC1;
+  fNetMag = mag(fNetVecX, fNetVecY);
+  fNetAngle = angle(fNetVecX, fNetVecY);
+
+  // Outputing net force magnitude and angle with the x-axis
+  printf("Magnitude of the resultant force on the charge at the origin: %.1f N\n", fNetMag);
+  printf("Force vector angle with the x-axis: %.1f degrees\n", fNetAngle);
+  return 0;
+}
+
 /***************************************************************************
 *
 *  Function Information
@@ -175,67 +244,4 @@ double convEFieldToForce(double eField, double obsCharge)
   double f; // Force of electric field (N)
   f = eField * obsCharge;
   return f;
-}
-
-int main (void)
-{
-  double charge1; // Coulombic charge of charge 1 (micro C)
-  double charge2; // Coulombic charge of charge 2 (micro C)
-  double charge3; // Coulombic charge of charge 3 (micro C)
-
-  double y; // y value of charge 3 (cm)
-  double x; // x value of charge 3 (cm)
-
-  double fNetVecX; // Net force vector x comp (N)
-  double fNetVecY; // Net force vector y comp (N)
-  double fNetMag; // Magnitude of the net force (N)
-  double fNetAngle; // Angle of the net force degrees
-
-  double eC2OnC1; // Electric field of charge 2 on 1 (N/C)
-  double eC3OnC1; // Electric field of charge 3 on 1 (N/C)
-
-  double fC2OnC1; // Force of charge 2 on 1 (N)
-  double fC3OnC1; // Force of charge 3 on 1 (N)
-
-
-  // Recieving input from user for charges 
-  printf("Enter charge [micro-Coulomb] of point #1 -> ");
-  scanf("%lf", &charge1);
-  printf("Enter charge [micro-Coulomb] of point #2 -> ");
-  scanf("%lf", &charge2);
-  printf("Enter charge [micro-Coulomb] of point #3 -> ");
-  scanf("%lf", &charge3);
-
-
-  // Recieving input for y and x coordinates of charge 2 and 3
-  printf("Enter Y coordinate [cm] of point #2 -> ");
-  scanf("%lf", &y);
-  printf("Enter X coordinate [cm] of point #3 -> ");
-  scanf("%lf", &x);
-  printf("\n");
-
-  // Converting micro coulombs to coulombs
-  charge1 = convUnitMuToB(charge1);
-  charge2 = convUnitMuToB(charge2);
-  charge3 = convUnitMuToB(charge3);
-  // Converting cm to m
-  y = convUnitCToB(y);
-  x = convUnitCToB(x);
-
-  // Calculating electric fields and forces from charge 2 and 3
-  eC2OnC1 = eField(charge2, y);
-  eC3OnC1 = eField(charge3, x);
-  fC2OnC1 = convEFieldToForce(eC2OnC1, charge1);
-  fC3OnC1 = convEFieldToForce(eC3OnC1, charge1);
-  // Finding net force vector and its magnitude and angle
-  fNetVecX = fC3OnC1;
-  fNetVecY = fC2OnC1;
-  fNetMag = mag(fNetVecX, fNetVecY);
-  fNetAngle = angle(fNetVecX, fNetVecY);
-
-
-  // Outputing net force magnitude and angle with the x-axis
-  printf("Magnitude of the resultant force on the charge at the origin: %.1f N\n", fNetMag);
-  printf("Force vector angle with the x-axis: %.1f degrees\n", fNetAngle);
-  return 0;
 }
