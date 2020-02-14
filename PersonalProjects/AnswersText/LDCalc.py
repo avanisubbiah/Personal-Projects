@@ -147,16 +147,21 @@ class levenshteinD:
                 # Swap the found minimum element with minI       
                 distList[keyInd][i], distList[keyInd][minI] = distList[keyInd][minI],\
                     distList[keyInd][i] 
+            keyInd += 1
         #print(distList)
 
         # Creating a related array to distList with the number of words per key in realADict
         totalWord = []
         for key in realADict:
             totalWordInKey = []
-            for val in realADict[key]:
-                #print(len(realADict[key]))
+            '''
+            for val in realADict:
+                print(key)
+                print(realADict[key])
                 totalWordInKey.append(len(realADict[key]))
             totalWord.append(sum(totalWordInKey))
+            '''
+            totalWord.append(len(realADict[key]))
         #print(totalWord)
 
         # Calculating total Levenshtein Distance per key in distListSumOfKey list 
