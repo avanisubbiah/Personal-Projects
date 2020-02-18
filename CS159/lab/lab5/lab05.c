@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  *  Programmers and Purdue Email Addresses:
- *  1. 
+ *  1. balsudea@purdue.edu
  *  2. subbiah@purdue.edu
  *  3. nbanjurt@purdue.edu
  *
