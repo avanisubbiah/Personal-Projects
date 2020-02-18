@@ -1,11 +1,11 @@
 /***************************************************************************
  *
  *  Programmers and Purdue Email Addresses:
- *  1. deanp@purdue.edu
+ *  1. 
  *  2. subbiah@purdue.edu
- *  3. hall529@purdue.edu
+ *  3. nbanjurt@purdue.edu
  *
- *  Lab 02:
+ *  Lab 05:
  *
  *  Academic Integrity Statement:
  *
@@ -13,7 +13,7 @@
  *  either modified or unmodified.  Neither have we provided access to our code
  *  to another. The effort we are submitting is our own original work.
  *
- *  Jan 11th, 3:30, SC G073:
+ *  Feb 18th, 3:30, SC G073:
  *
  *  Program Description:
  *  The program takes the charge of 3 point charges and calculates the resultant
