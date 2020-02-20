@@ -4,8 +4,8 @@
 // defining type struct node with double val and next pointer (nodeDouble)
 typedef struct node
 {
-    double val;
-    struct node* next;
+    double val; // Value of the node
+    struct node* next; // Pointer to next node
 } nodeDouble;
 
 void createNodeAtEnd(nodeDouble * head, double val)
@@ -66,7 +66,7 @@ void setAtIndex(nodeDouble * head, int index, double val)
     currentNode->val = val;
 }
 
-// print whole linked list
+// Print whole linked list
 void printLinkedList(nodeDouble * head)
 {
     nodeDouble * currentNode = head;
@@ -79,10 +79,12 @@ void printLinkedList(nodeDouble * head)
     }
 }
 
+// Remove node at index
 void removeNode(nodeDouble * head, int index)
 {
     nodeDouble * currentNode = head;
 
+    // Iterating through linked list to node before node at index
     for (int i = 0; i < index-1; i++)
     {
         if (currentNode == NULL)
@@ -94,21 +96,22 @@ void removeNode(nodeDouble * head, int index)
         }
     }
 
+    // Setting the next pointer of node before index to node after index
     currentNode->next = currentNode->next->next;
 }
 
 int main (void)
 {
-    nodeDouble* head = NULL;
-    head = (nodeDouble*) malloc(sizeof(nodeDouble));
+    // Allocating space for the head node
+    nodeDouble* head = (nodeDouble*) malloc(sizeof(nodeDouble));
     if (head == NULL) {
         return 1;
     }
-
     head->val = 1;
     head->next = NULL;
 
-    for(int i=0; i<10; i++)
+    // Iterating and adding 10 values to linked list
+    for(int i=0; i<50; i++)
     {
         double val = 1.1*((double)i);
         createNodeAtEnd(head, val);
