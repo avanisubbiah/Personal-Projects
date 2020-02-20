@@ -103,13 +103,15 @@ void removeNode(nodeDouble * head, int index)
 int main (void)
 {
     // Allocating space for the head node
-    nodeDouble* head = (nodeDouble*) malloc(sizeof(nodeDouble));
+    nodeDouble* head = (nodeDouble *) malloc(sizeof(nodeDouble));
     if (head == NULL) {
         return 1;
     }
     head->val = 1;
     head->next = NULL;
-
+    printf("Size of int: %lu\n", sizeof(int));
+    printf("Size of nodeDouble: %lu\n", sizeof(nodeDouble));
+    printf("Head Pointer Address: %lld\n", (long long)head);
     // Iterating and adding 10 values to linked list
     for(int i=0; i<50; i++)
     {
