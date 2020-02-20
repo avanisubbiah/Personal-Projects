@@ -1,12 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// defining type struct node with double val and next pointer (nodeDouble)
+// Defining type struct node with double val and next pointer (nodeDouble)
 typedef struct node
 {
     double val; // Value of the node
     struct node* next; // Pointer to next node
 } nodeDouble;
+
+// Declaring linked list methods
+void createNodeAtEnd(nodeDouble * head, double val);
+double retrieveAtIndex(nodeDouble * head, int index);
+void setAtIndex(nodeDouble * head, int index, double val);
+void printLinkedList(nodeDouble * head);
+void removeNode(nodeDouble * head, int index);
+
+int main (void)
+{
+    // Allocating space for the head node
+    nodeDouble* head = (nodeDouble *) malloc(sizeof(nodeDouble));
+    if (head == NULL) {
+        return 1;
+    }
+    head->val = 1;
+    head->next = NULL;
+    printf("Size of int: %lu\n", sizeof(int));
+    printf("Size of nodeDouble: %lu\n", sizeof(nodeDouble));
+    printf("Head Pointer Address: %lld\n", (long long)head);
+    // Iterating and adding 10 values to linked list
+    for(int i=0; i<10; i++)
+    {
+        double val = 1.1*((double)i);
+        createNodeAtEnd(head, val);
+    }
+    setAtIndex(head, 2, 2.5343);
+    removeNode(head, 4);
+    printLinkedList(head);
+    printf("Value: %lf Found at: %d\n", retrieveAtIndex(head, 3), 3);
+}
+
 
 void createNodeAtEnd(nodeDouble * head, double val)
 {
@@ -98,28 +130,4 @@ void removeNode(nodeDouble * head, int index)
 
     // Setting the next pointer of node before index to node after index
     currentNode->next = currentNode->next->next;
-}
-
-int main (void)
-{
-    // Allocating space for the head node
-    nodeDouble* head = (nodeDouble *) malloc(sizeof(nodeDouble));
-    if (head == NULL) {
-        return 1;
-    }
-    head->val = 1;
-    head->next = NULL;
-    printf("Size of int: %lu\n", sizeof(int));
-    printf("Size of nodeDouble: %lu\n", sizeof(nodeDouble));
-    printf("Head Pointer Address: %lld\n", (long long)head);
-    // Iterating and adding 10 values to linked list
-    for(int i=0; i<50; i++)
-    {
-        double val = 1.1*((double)i);
-        createNodeAtEnd(head, val);
-    }
-    setAtIndex(head, 2, 2.5343);
-    removeNode(head, 4);
-    printLinkedList(head);
-    printf("Value: %lf Found at: %d\n", retrieveAtIndex(head, 3), 3);
 }
