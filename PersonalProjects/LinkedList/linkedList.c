@@ -28,11 +28,10 @@ void createNodeAtEnd(nodeDouble * head, double val)
 double retrieveAtIndex(nodeDouble * head, int index)
 {
     nodeDouble * currentNode = head;
-
+    // Iterating through list according to specified index
     for (int i = 0; i < index; i++)
     {   
-        printf("%d\n", i);
-        
+        // Checking if index is valid
         if (currentNode->next == NULL) 
         {
             printf("Index out of bounds\n");
@@ -40,10 +39,31 @@ double retrieveAtIndex(nodeDouble * head, int index)
         {
             currentNode = currentNode->next;
         }
-        
     }
 
+    // Returning value of node at index
     return currentNode->val;
+}
+
+// Set value of node at index equal to value
+void setAtIndex(nodeDouble * head, int index, double val)
+{
+    nodeDouble * currentNode = head;
+    // Iterating through list according to specified index
+    for (int i = 0; i < index; i++)
+    {
+        // Checking if index is valid
+        if (currentNode->next == NULL)
+        {
+            printf("Index out of bounds\n");
+        } else
+        {
+            currentNode = currentNode->next;
+        }
+    }
+
+    // Setting value of node at index equal to input value
+    currentNode->val = val;
 }
 
 // print whole linked list
@@ -57,6 +77,24 @@ void printLinkedList(nodeDouble * head)
         printf("%lf\n", currentNode->val);
         currentNode = currentNode->next;
     }
+}
+
+void removeNode(nodeDouble * head, int index)
+{
+    nodeDouble * currentNode = head;
+
+    for (int i = 0; i < index-1; i++)
+    {
+        if (currentNode == NULL)
+        {
+            printf("Index out of bounds\n");
+        } else
+        {
+            currentNode = currentNode->next;
+        }
+    }
+
+    currentNode->next = currentNode->next->next;
 }
 
 int main (void)
@@ -75,7 +113,8 @@ int main (void)
         double val = 1.1*((double)i);
         createNodeAtEnd(head, val);
     }
-
+    setAtIndex(head, 2, 2.5343);
+    removeNode(head, 4);
     printLinkedList(head);
     printf("Value: %lf Found at: %d\n", retrieveAtIndex(head, 3), 3);
 }
