@@ -39,7 +39,6 @@ int main (void)
     printf("Value: %lf Found at: %d\n", retrieveAtIndex(head, 3), 3);
 }
 
-
 void createNodeAtEnd(nodeDouble * head, double val)
 {
     // setting pointer type node to head
