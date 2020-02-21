@@ -14,6 +14,7 @@ double retrieveAtIndex(nodeDouble * head, int index);
 void setAtIndex(nodeDouble * head, int index, double val);
 void printLinkedList(nodeDouble * head);
 void removeNode(nodeDouble * head, int index);
+void addNodeAfter(nodeDouble * head, int index, double val);
 
 int main (void)
 {
@@ -24,9 +25,6 @@ int main (void)
     }
     head->val = 1;
     head->next = NULL;
-    printf("Size of int: %lu\n", sizeof(int));
-    printf("Size of nodeDouble: %lu\n", sizeof(nodeDouble));
-    printf("Head Pointer Address: %lld\n", (long long)head);
     // Iterating and adding 10 values to linked list
     for(int i=0; i<10; i++)
     {
@@ -35,6 +33,7 @@ int main (void)
     }
     setAtIndex(head, 2, 2.5343);
     removeNode(head, 4);
+    addNodeAfter(head, 5, 50.1243);
     printLinkedList(head);
     printf("Value: %lf Found at: %d\n", retrieveAtIndex(head, 3), 3);
 }
@@ -103,10 +102,12 @@ void printLinkedList(nodeDouble * head)
     nodeDouble * currentNode = head;
     
     // Iterate through list and print each value
+    int index = 0;
     while (currentNode != NULL)
     {
-        printf("%lf\n", currentNode->val);
+        printf("Index: %d = %lf\n", index, currentNode->val);
         currentNode = currentNode->next;
+        index++; 
     }
 }
 
@@ -129,4 +130,25 @@ void removeNode(nodeDouble * head, int index)
 
     // Setting the next pointer of node before index to node after index
     currentNode->next = currentNode->next->next;
+}
+
+void addNodeAfter(nodeDouble * head, int index, double val)
+{
+    nodeDouble * currentNode = head;
+    nodeDouble* newNode = (nodeDouble *) malloc(sizeof(nodeDouble));
+    newNode->val = val;
+    
+    for (int i = 0; i < index; i++)
+    {
+        if (currentNode == NULL)
+        {
+            printf("Index out of bounds\n");
+        } else
+        {
+            currentNode = currentNode->next;
+        }
+    }
+
+    newNode->next = currentNode->next;
+    currentNode->next = newNode;
 }
