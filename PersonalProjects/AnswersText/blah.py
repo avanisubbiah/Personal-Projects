@@ -1,1 +1,0 @@
-[[["Manager'sA", 'JohnG'], ["Manager'sA", 'DoeG'], ['OfficeA', 'JohnG'], ['OfficeA', 'DoeG']], [["Manager'sA", "Manager'sG"], ["Manager'sA", 'OfficeG'], ['OfficeA', "Manager'sG"], ['OfficeA', 'OfficeG']], [['JohnA', 'JohnG'], ['JohnA', 'DoeG'], ['DoeA', 'JohnG'], ['DoeA', 'DoeG']], [['JohnA', "Manager'sG"], ['JohnA', 'OfficeG'], ['DoeA', "Manager'sG"], ['DoeA', 'OfficeG']]]
