@@ -9,7 +9,8 @@ typedef struct node
 } nodeDouble;
 
 // Declaring linked list methods
-void createNodeAtEnd(nodeDouble * head, double val);
+void push(nodeDouble * head, double val);
+double pop(nodeDouble * head);
 double retrieveAtIndex(nodeDouble * head, int index);
 void setAtIndex(nodeDouble * head, int index, double val);
 void printLinkedList(nodeDouble * head);
@@ -29,18 +30,19 @@ int main (void)
     for(int i=0; i<10; i++)
     {
         double val = 1.1*((double)i);
-        createNodeAtEnd(head, val);
+        push(head, val);
     }
     setAtIndex(head, 2, 2.5343);
     removeNode(head, 4);
     addNodeAfter(head, 5, 50.1243);
     printLinkedList(head);
+    printf("Pop: %lf\n", pop(head));
     printf("Value: %lf Found at: %d\n", retrieveAtIndex(head, 3), 3);
 }
 
-void createNodeAtEnd(nodeDouble * head, double val)
+void push(nodeDouble * head, double val)
 {
-    // setting pointer type node to head
+    // Setting pointer type node to head
     nodeDouble * currentNode = head;
     // iterating through the list
     while (currentNode->next != NULL) 
@@ -52,6 +54,21 @@ void createNodeAtEnd(nodeDouble * head, double val)
     currentNode->next = (nodeDouble *) malloc(sizeof(nodeDouble));
     currentNode->next->val = val;
     currentNode->next->next = NULL;
+}
+
+// Method to pop top of list
+double pop(nodeDouble * head)
+{
+    // Setting currentNode to head
+    nodeDouble * currentNode = head;
+    // Iterating through nodes through to end
+    while (currentNode->next != NULL)
+    {
+        currentNode = currentNode->next;
+    }
+    
+    // Returning value of node at end
+    return currentNode->val;
 }
 
 // Method to retrieve double value at index in linked list

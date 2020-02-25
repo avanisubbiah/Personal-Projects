@@ -6,35 +6,6 @@
 #define SIZEMAX 100
 
 // ______________Stack Definition and Methods______________
-/*
-struct charStack
-{
-    char stack[SIZEMAX];
-    int top;
-};
-
-// TODO: Ask Akhil about this weird structure "constructor-like" thingy
-struct charStack* createCharStack(unsigned int size) // ! wat
-{
-    struct charStack* charStack = (struct charStack*)malloc(sizeof(charStack1)); // ! wat (I understand mallc buut)
-    charStack->top = -1; // <- Now this I actually understand
-    return charStack;
-};
-
-int isEmpty(struct charStack* charStack)
-{
-    if(charStack->top == -1)
-    {
-        return 1;
-    } 
-    
-    else 
-    {
-        return 0;
-    }
-}
-*/
-
 char stack[SIZEMAX];
 int top = -1;
 
