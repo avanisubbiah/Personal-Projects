@@ -3,24 +3,115 @@
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
+#define STRSIZE 10
+#define SIZEMAX 100000
 
-#define SIZEMAX 100
+int isOperand(char sym);
+int operatorPrecedence(char operator);
 
 // ______________Stack Definition and Methods______________
-// Defining type struct node with char val and next pointer (nodeChar)
+
+// Defining type struct node with char val and next pointer (nodeStr)
 typedef struct node
 {
-    char val; // Value of the node
+    char val[STRSIZE]; // Val[STRSIZE]ue of the node
     struct node* next; // Pointer to next node
+} nodeStr;
+
+// Declaring linked list methods
+void push(nodeStr * head, char val[STRSIZE]);
+const char * pop(nodeStr * head);
+const char * peek(nodeStr* head);
+void printLinkedList(nodeStr * head);
+
+void push(nodeStr * head, char val[STRSIZE])
+{
+    // Setting pointer type node to head
+    nodeStr * currentNode = head;
+    // iterating through the list
+    while (currentNode->next != NULL) 
+    {
+        currentNode = currentNode->next;
+    }
+
+    //Creating node at end of list
+    currentNode->next = (nodeStr *) malloc(sizeof(nodeStr));
+    strcpy(currentNode->next->val, val);
+    currentNode->next->next = NULL;
+}
+
+// Method to pop top of list
+const char * pop(nodeStr * head)
+{
+    // Setting currentNode to head
+    nodeStr * currentNode = head;
+    // Iterating through nodes through to end
+    int canReturnVal = 0;
+    if(currentNode->next != NULL) {
+        while (currentNode->next->next != NULL)
+        {
+            currentNode = currentNode->next;
+        }
+        canReturnVal = 1;
+    } else {
+        printf("Stack is empty\n");
+    }
+    // Checking if a value can be returned
+    if (canReturnVal == 1)
+    {
+        // Creating a array pointer to string in currentNode->next->val
+        char (*returnStrP)[STRSIZE] = &currentNode->next->val;
+        // Setting currenNode->next to NULL to remove from list
+        currentNode->next = NULL;
+        // Returning string value at returnStrP array pointer
+        return *returnStrP;
+    } else {
+        return "\0";
+    }
+}
+
+const char * peek(nodeStr* head)
+{
+    // Setting currentNode to head
+    nodeStr * currentNode = head;
+    // Iterating to end of linked list
+    while(currentNode->next != NULL)
+    {
+        currentNode = currentNode->next;
+    }
+    // Returning value at end of linked list
+    return currentNode->val;
+}
+
+// Print whole linked list
+void printLinkedList(nodeStr * head)
+{
+    nodeStr * currentNode = head;
+    
+    // Iterate through list and print each val[STRSIZE]ue
+    int index = -1;
+    while (currentNode != NULL)
+    {
+        printf("Index: %d = %s\n", index, currentNode->val);
+        currentNode = currentNode->next;
+        index++; 
+    }
+}
+
+// Defining type struct node with char val and next pointer (nodeChar)
+typedef struct nodeChar
+{
+    char val; // Value of the node
+    struct nodeChar* next; // Pointer to next node
 } nodeChar;
 
-int isEmpty(nodeChar * head);
-void push(nodeChar * head, char val);
-char pop(nodeChar * head);
-char peek(nodeChar * head);
-void printLinkedList(nodeChar * head);
+int isEmptyChar(nodeChar * head);
+void pushChar(nodeChar * head, char val);
+char popChar(nodeChar * head);
+char peekChar(nodeChar * head);
+void printLinkedListChar(nodeChar * head);
 
-int isEmpty(nodeChar * head)
+int isEmptyChar(nodeChar * head)
 {
     nodeChar* currentNode = head;
     if (currentNode->next == NULL)
@@ -31,7 +122,7 @@ int isEmpty(nodeChar * head)
     }
 }
 
-void push(nodeChar * head, char val)
+void pushChar(nodeChar * head, char val)
 {
     // Setting pointer type node to head
     nodeChar * currentNode = head;
@@ -48,7 +139,7 @@ void push(nodeChar * head, char val)
 }
 
 // Method to pop top of list
-char pop(nodeChar * head)
+char popChar(nodeChar * head)
 {
     // Setting currentNode to head
     nodeChar * currentNode = head;
@@ -69,7 +160,7 @@ char pop(nodeChar * head)
     return returnChar;
 }
 
-char peek(nodeChar* head)
+char peekChar(nodeChar* head)
 {
     nodeChar * currentNode = head;
     while(currentNode->next != NULL)
@@ -80,7 +171,7 @@ char peek(nodeChar* head)
 }
 
 // Print whole linked list
-void printLinkedList(nodeChar * head)
+void printLinkedListChar(nodeChar * head)
 {
     nodeChar * currentNode = head;
     
@@ -165,6 +256,97 @@ int peekInt()
     return stackLong[topLong];
 }
 
+
+char * strrev(char * str)
+{
+    if (! str || ! *str)
+    {
+        return str;
+    }
+    int i = strlen(str) - 1;
+    int j = 0;
+
+    char temp;
+    while (i > j)
+    {
+        temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+        i--;
+        j++;
+    }
+}
+
+//______________Seperate Int from Char_____________
+
+void infixStringToStack(char infixExp[SIZEMAX], nodeStr* headInfix, nodeChar* headOperand)
+{
+    
+    //printLinkedListChar(headOperand);
+    printf("MethodRun\n");
+    //printLinkedListChar(headOperand);
+    // Iterating through the infix expression
+    //printf("%ld", strlen(infixExp));
+    
+    for (int i = 0; i < strlen(infixExp); i++)
+    {
+        printf("----------------------------\n");
+        printf("%c\n", infixExp[i]);
+        if (!isOperand(infixExp[i]))
+        {   
+            char tempArr[SIZEMAX];
+            memset(tempArr, 0, sizeof tempArr);
+            char operator[2];
+            memset(operator, 0, sizeof operator);
+            operator[0] = infixExp[i];
+            operator[1] = '\0';
+            int i = 0;
+            while(!isEmptyChar(headOperand))
+            {
+                printf("Iteration\n");
+                tempArr[i] = popChar(headOperand);
+                i++;
+                printf("Iteration Complete\n");
+            }
+
+            strrev(tempArr);
+            
+            printf("tempArrFull:|%s|\n", tempArr);
+            if (tempArr[0] != '\0') {
+                push(headInfix, tempArr);
+            }
+            push(headInfix, operator);
+            printLinkedList(headInfix);
+        } else 
+        {
+            printf("Operator\n");
+            pushChar(headOperand, infixExp[i]);
+            printLinkedListChar(headOperand);
+        }
+    }
+    
+    printf("--------------------\n");
+    printLinkedList(headInfix);
+    printLinkedListChar(headOperand);
+    char lastArr[SIZEMAX];
+    memset(lastArr, 0, sizeof lastArr);
+    int i = 0;
+    while(!isEmptyChar(headOperand))
+    {
+        printf("Iteration\n");
+        lastArr[i] = popChar(headOperand);
+        i++;
+        printf("Iteration Complete\n");
+    }
+    //printf("%d\n", popChar(headOperand));
+    
+    strrev(lastArr);
+    
+    push(headInfix, lastArr);
+    
+    printLinkedList(headInfix);
+    
+}
 //______________Infix/Postfix Methods______________
 
 // Method to determine if the next symbol in the infixExpression is an operand
@@ -182,7 +364,7 @@ int isOperand(char sym)
 }
 
 // Method to determine the precedence of the operator
-int operatorPrecedence(char operator) 
+int operatorPrecedence(char operator)
 {
     // Determining precedence of each operator assigned to values 3, 2, 1, and 0
     if (operator == '+' || operator == '-') 
@@ -203,8 +385,9 @@ int operatorPrecedence(char operator)
     }
 }
 
+/*
 // Method to convert infix to postfix expression
-void infixToPostfix(char infixExpression[SIZEMAX], char postfix[SIZEMAX], nodeChar* head) {
+void infixToPostfix(char infixExpression[SIZEMAX], char postfix[SIZEMAX], nodeStr* head) {
     int i = 0;
     int j = 0;
     //Iterating infix to postfix rules across infix expression
@@ -263,7 +446,7 @@ void infixToPostfix(char infixExpression[SIZEMAX], char postfix[SIZEMAX], nodeCh
     }
     
 }
-
+*/
 //______________Postfix Evaluator______________
 long postfixEval(char postfixExpression[SIZEMAX])
 {
@@ -325,20 +508,32 @@ int main (void)
     char infixExpression[SIZEMAX];
     char postfixExpression[SIZEMAX];
     long resultPostfix;
+    
+    nodeStr* headInfix = (nodeStr *) malloc(sizeof(nodeStr));
+    if (headInfix == NULL) {
+        return 1;
+    }
 
-    nodeChar* head = (nodeChar *) malloc(sizeof(nodeChar));
+    nodeStr* head = (nodeStr *) malloc(sizeof(nodeStr));
     if (head == NULL) {
         return 1;
     }
-    head->val = '\0';
+
+    nodeChar* headOperand = (nodeChar *) malloc(sizeof(nodeChar));
+    if (headOperand == NULL) {
+        return 1;
+    }
+    strcpy(head->val, "head");
     head->next = NULL;
 
+    
     // Printing and scanning for infix input
     printf("Enter infix expression:\n");
     scanf("%s", infixExpression);
-    infixToPostfix(infixExpression, postfixExpression, head);
+    infixStringToStack(infixExpression, headInfix, headOperand);
+    //infixToPostfix(infixExpression, postfixExpression, head);
     printf("Postfix expression: %s\n", postfixExpression);
-    resultPostfix = postfixEval(postfixExpression);
+    //resultPostfix = postfixEval(postfixExpression);
     printf("Result = %ld\n", resultPostfix);
     
     return 0;

@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "stdio.h": "c"
+        "*.m": "matlab",
+        "stdlib.h": "c"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": false,
